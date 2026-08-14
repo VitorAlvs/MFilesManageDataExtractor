@@ -7,7 +7,7 @@ Automação de extração, tratamento e carga de dados do M-Files Manage para SQ
 
 ### 🎯 Objetivo e Motivação
 
-Este projeto foi desenvolvido para automatizar a coleta de dados de volumetria (como contagem de objetos, uso de armazenamento e número de usuários) de diferentes vaults gerenciados pelo M-Files. Embora o M-Files possua uma API REST robusta para interagir com o conteúdo dos vaults, os dados consolidados de volumetria não estão disponíveis através dela, sendo acessíveis apenas pelo portal web do **M-Files Manage**.
+Este projeto foi desenvolvido para automatizar a coleta de dados de volumetria (como contagem de objetos, uso de armazenamento e número de usuários) de vaults hospedados na nuvem da M-Files (M-Files Cloud). Embora o M-Files possua uma API REST robusta para interagir com o conteúdo dos vaults, os dados consolidados de volumetria para ambientes em nuvem não estão disponíveis através dela, sendo acessíveis apenas pelo portal web do **M-Files Manage**.
 
 A abordagem manual de acessar o portal para cada vault, exportar relatórios e consolidar as informações é demorada, propensa a erros e inviabiliza o monitoramento contínuo. Com o objetivo de otimizar esse processo, esta solução utiliza automação web (Selenium) para simular a navegação humana, extrair os relatórios em CSV e centralizar os dados de forma eficiente.
 
@@ -217,7 +217,7 @@ Automation for extracting, processing, and loading data from M-Files Manage to S
 
 ### 🎯 Objective and Motivation
 
-This project was developed to automate the collection of volumetry data (such as object counts, storage usage, and user numbers) from various vaults managed by M-Files. Although M-Files has a robust REST API for interacting with vault content, consolidated volumetry data is not available through it and can only be accessed via the **M-Files Manage** web portal.
+This project was developed to automate the collection of volumetry data (such as object counts, storage usage, and user numbers) from vaults hosted in the M-Files Cloud. Although M-Files has a robust REST API for interacting with vault content, consolidated volumetry data for cloud environments is not available through it and can only be accessed via the **M-Files Manage** web portal.
 
 The manual approach of accessing the portal for each vault, exporting reports, and consolidating the information is time-consuming, error-prone, and hinders continuous monitoring. To optimize this process, this solution uses web automation (Selenium) to simulate human navigation, extract the CSV reports, and centralize the data efficiently.
 
