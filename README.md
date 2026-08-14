@@ -1,5 +1,3 @@
-﻿#MFilesManageDataExtractor
- 
 *   [🇧🇷 Português](#português)
 *   [🇺🇸 English](#english)
 
