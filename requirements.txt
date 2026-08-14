@@ -1,0 +1,7 @@
+pandas
+selenium
+xlsxwriter
+mfiles
+pyodbc
+dotenv
+sendgrid
