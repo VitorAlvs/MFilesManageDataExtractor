@@ -1,7 +1,7 @@
 *   [🇧🇷 Português](#português)
 *   [🇺🇸 English](#english)
 
-## 🇧🇷 Português
+## 🇧🇷 Português <a name="português"></a>
 
 Automação de extração, tratamento e carga de dados do M-Files Manage para SQL Server, com geração de relatórios Excel e upload automático para o M-Files.
 
@@ -211,7 +211,7 @@ Este projeto é licenciado sob a licença MIT.
 
 ---
 
-## 🇺🇸 English
+## 🇺🇸 English <a name="english"></a>
 
 Automation for extracting, processing, and loading data from M-Files Manage to SQL Server, including Excel report generation and automatic upload to M-Files.
 
