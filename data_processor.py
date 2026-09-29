@@ -3,19 +3,19 @@ import datetime
 import config 
 
 def criar_mapeamento_vault_time(vault_csv_files):
-    """Creates a dictionary mapping each vault to its corresponding team."""
+    """Cria um dicionário mapeando cada vault ao seu time correspondente."""
     vault_team_map = {}
     for csv_path in vault_csv_files:
         filename = os.path.basename(csv_path)
         
-        # 1. Start by assuming the default team
-        team = config.DEFAULT_TEAM
+        # 1. Começamos assumindo que é o time padrão
+        team = config.DEFAULT_TEAM 
         
-        # 2. Check our "control panel" for a specific rule
-        for key, team_name in config.VAULT_TEAM_MAPPING.items():
-            if key in filename:
-                team = team_name
-                break # Found the team, can stop searching!
+        # 2. Procuramos no nosso "painel de controle" se há uma regra específica
+        for chave, nome_do_time in config.VAULT_TEAM_MAPPING.items():
+            if chave in filename:
+                team = nome_do_time
+                break # Achou o time, pode parar de procurar!
         
         with open(csv_path, "r", encoding="utf-8") as doc:
             for line in doc.readlines()[1:]:
@@ -25,7 +25,7 @@ def criar_mapeamento_vault_time(vault_csv_files):
                     
     return vault_team_map
 
-def consolidate_data(user_data, vault_data, vault_team_map):
+def consolidar_dados(user_data, vault_data, vault_team_map):
     """
     Estrutura os dados brutos de usuários e vaults em um dicionário consolidado.
     """
@@ -36,30 +36,30 @@ def consolidate_data(user_data, vault_data, vault_team_map):
         if len(row) < 10:
             continue
         
-        vault_name = row[9]
+        nome_vault = row[9]
         email = row[2]
         username = row[3]
         license_info = row[4]
 
         # Inicializa a estrutura para um novo vault se ele não existir
-        if vault_name not in all_data:
-            all_data[vault_name] = {
+        if nome_vault not in all_data:
+            all_data[nome_vault] = {
                 'vaultData': {
-                    'VaultName': [], 'Date': [], 'DatabaseSize': [],
-                    'FileStorage': [], 'EnabledUsers': [], 'Objects': [],
-                    'Location': vault_team_map.get(vault_name, config.DEFAULT_TEAM) 
+                    'Vault name': [], 'Data': [], 'Database Size': [],
+                    'File Storage': [], 'Enabled Users': [], 'Objects': [],
+                    'Localizacao': vault_team_map.get(nome_vault, "Cloud Team I") 
                 },
                 'userData': []
             }
         
         # Define as condições de filtro para adicionar um usuário
-        is_external = all(domain not in email for domain in config.IGNORED_DOMAINS)
+        is_external = all(dominio not in email for dominio in config.DOMINIOS_IGNORADOS)
         has_license = license_info != 'No license'
-        is_not_internal_user = username not in config.MFILES_IGNORED_USERS
-        is_not_duplicate = [username, email] not in all_data[vault_name]['userData']
+        is_not_internal_user = username not in config.MFILES_USERS
+        is_not_duplicate = [username, email] not in all_data[nome_vault]['userData']
 
-        if is_external and has_license and is_not_internal_user and is_not_duplicate: # Preserve logic
-            all_data[vault_name]['userData'].append([row[3], email])
+        if is_external and has_license and is_not_internal_user and is_not_duplicate:
+            all_data[nome_vault]['userData'].append([username, email, license_info])
 
     # 2. Processa os dados técnicos dos vaults
     for row in vault_data:
@@ -67,45 +67,45 @@ def consolidate_data(user_data, vault_data, vault_team_map):
             continue
             
         name_vault = row[0]
-        if not name_vault: # Preserve logic
+        if not name_vault:
             continue
 
 
-        # Capture values and remove extra spaces/newlines
+        # Captura os valores e remove espaços extras/quebras de linha
         raw_storage = row[5].strip()
         raw_db_size = row[6].strip()
         raw_objects = row[3].strip()
 
-        # Safe conversion for File Storage (row[5])
+        # Conversão segura para File Storage (row[5])
         file_storage = float(raw_storage) if raw_storage else 0.0
 
-        # Safe conversion for Database Size (row[6])
+        # Conversão segura para Database Size (row[6])
         database_size = float(raw_db_size) if raw_db_size else 0.0
 
-        # Safe conversion for Objects (row[3])
+        # Conversão segura para Objects (row[3])
         objects = int(raw_objects) if raw_objects else 0
 
-        # Ensure the vault exists in the dictionary (in case it has no users)
-        if name_vault != "" and name_vault not in all_data: # Preserve logic
+        # Garante que o vault exista no dicionário (caso não tenha usuários)
+        if name_vault != "" and name_vault not in all_data:
              all_data[name_vault] = {
                 'vaultData': {
-                    'VaultName': [], 'Date': [], 'DatabaseSize': [],
-                    'FileStorage': [], 'EnabledUsers': [], 'Objects': [],
-                    'Location': vault_team_map.get(name_vault, config.DEFAULT_TEAM) 
+                    'Vault name': [], 'Data': [], 'Database Size': [],
+                    'File Storage': [], 'Enabled Users': [], 'Objects': [],
+                    'Localizacao': vault_team_map.get(name_vault, "Cloud Team I") 
                 },
                 'userData': []
             }
             
-        # Add the 'Objects' key if it doesn't exist
+        # Adiciona a chave 'Objects' se ela não existir
         if 'Objects' not in all_data[name_vault]['vaultData']:
             all_data[name_vault]['vaultData']['Objects'] = []
 
-        # Add technical data to the corresponding vault
-        all_data[name_vault]['vaultData']['VaultName'].append(name_vault)
-        all_data[name_vault]['vaultData']['Date'].append(datetime.datetime.now())
-        all_data[name_vault]['vaultData']['DatabaseSize'].append(round(database_size, 2))
-        all_data[name_vault]['vaultData']['FileStorage'].append(round(file_storage, 2))
-        all_data[name_vault]['vaultData']['EnabledUsers'].append(len(all_data[name_vault]['userData']))
+        # Adiciona os dados técnicos ao vault correspondente
+        all_data[name_vault]['vaultData']['Vault name'].append(name_vault)
+        all_data[name_vault]['vaultData']['Data'].append(datetime.datetime.now())
+        all_data[name_vault]['vaultData']['Database Size'].append(round(database_size, 2))
+        all_data[name_vault]['vaultData']['File Storage'].append(round(file_storage, 2))
+        all_data[name_vault]['vaultData']['Enabled Users'].append(len(all_data[name_vault]['userData']))
         all_data[name_vault]['vaultData']['Objects'].append(objects)
         
     return all_data

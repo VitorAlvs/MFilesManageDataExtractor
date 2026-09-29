@@ -80,5 +80,5 @@ MFILES_PROP_MONTH = "Month"
 # =====================================================================
 # CURRENT CSV HEADER STRUCTURE
 # =====================================================================
-HEADER_USERS = ['Account Name', 'Account Type', 'Email', 'Full Name', 'License Type', 'Information 1', 'Information 2', 'M-Files Manage role', 'State', 'Vault access', 'Username']
+HEADER_USERS = ['Account Name', 'Account Type', 'Email', 'Full name', 'License Type', 'Information 1', 'Information 2', 'M-Files Manage role', 'State', 'Vault access', 'Username', 'externalId', 'authenticationConfigurationId']
 HEADER_VAULTS = ['Name', 'Environment', 'Enabled users', 'Objects', 'Object versions', 'File storage', 'Database size']
